@@ -7,6 +7,7 @@ This time we will run our solver as a service :)
 Sources:
 - [fast-api — the web framework we will use](https://fastapi.tiangolo.com/)
 - [pydantic — fast-api friendly alternative to dataclasses](https://docs.pydantic.dev/latest/)
+- [swagger — UI for services](https://swagger.io/)
 
 ## TODO: 
 
@@ -18,10 +19,10 @@ There are several tasks to complete:
     - `src/utils/all_different.py` — a utility function to check whether an array has unique elements
     - `src/solvers/sat_solver.py` — checking whether sudoku has a unique solution using SAT
     - `api.py` - handling various requests
-- [ ] use `api.py` to run your service locally
-    - check the swagger
+- [ ] run `api.py` to run your service locally if you are using your local computer:
+    - check the swagger via `http://127.0.0.1:8000/docs`
 - [ ] use `render.com` to run your service public
-    - instructions will be available in few minutes
+    - instructions are availabe via [wiki](https://gitlab.com/agh-courses/24/wp/lab-12/-/wikis/home)
 - [ ] keep your code tidy by running `ruff format` and `ruff check` or using vs code `ruff` extension
     - bobot won't give points if your file is not well formatted 
 
@@ -60,11 +61,11 @@ The rest will be taken care of automatically. You can check the `GRADE.md` file 
     .
     ├── puzzles                     # contains puzzles of various sizes
     ├── src                         # source directory
-    │   ├── model                   # - directory with the problem model 
-    │   │   └── grid.py             # representation of the sudoku grid
+    │   ├── model                   # TODO: representation of the sudoku grid and requests
     │   ├── solvers                 # TODO: directory with the sudoku solvers
-    │   └── utils                   # TODO: various utilities              
+    │   └── utils                   # TODO: various utilities      
+    ├── api.py                      # TODO: start the service 
     ├── benchmark.py                # you may use this script to compare solvers
-    ├── main.py                     # TODO: create this file with `uv init`
-    ├── pyproject.toml              # TODO: create this file with `uv init`
+    ├── main.py                     
+    ├── pyproject.toml              
     └── README.md                   # the README you are reading now
