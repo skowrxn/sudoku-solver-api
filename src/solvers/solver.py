@@ -55,14 +55,7 @@ class SudokuSolver(ABC):
         """
         return timer() > self._deadline
 
-    # TODO:
-    # Create an abstract method matching the docstring
-    #
-    # guide: https://www.geeksforgeeks.org/abstract-classes-in-python/
-    # docs: https://docs.python.org/3/library/abc.html#abc.abstractmethod
-    #
-    # tip. the method definition has to have something below, e.g. `pass`, `...`
-    #      the docstring is also something :)
+
     @abstractmethod
     def run_algorithm(self) -> SudokuGrid | None:
         """
@@ -110,12 +103,4 @@ class SudokuSolver(ABC):
         **kwargs: Any
             extra named arguments passed to the solver constructor
         """
-        # TODO:
-        # this method should behave according to the docstring, i.e.
-        # 1. create a solver of type `cls`
-        #   - solver constructor has `puzzle` and `time_limit` args,
-        #     but the constructor may be extended by the subclass.
-        #     Therefore, pass forward also args and kwargs.
-        #     Some explanation:https://www.geeksforgeeks.org/args-kwargs-python/
-        # 2. return result of the `run_algorithm` method
         return cls(puzzle, time_limit, *args, **kwargs).run_algorithm()
