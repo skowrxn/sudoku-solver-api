@@ -3,7 +3,7 @@ from dataclasses import dataclass
 import math
 import numpy as np
 import numpy.typing as npt
-from src.utils.all_different import all_different_except
+from src.utils.all_different import all_different_except  # noqa
 
 
 @dataclass(frozen=True, slots=True)
@@ -112,8 +112,8 @@ class SudokuGrid:
         # - add checking whether values do not repeat in rows, columns or blocks
         #   raise ValueError as always
         # tip. use `all_different_except` from `src.utils.all_different`
-        pass 
-    
+        pass
+
     @property
     def size(self) -> int:
         """

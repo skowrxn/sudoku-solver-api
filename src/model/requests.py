@@ -1,8 +1,8 @@
 from typing import Annotated
 from pydantic import AfterValidator, BaseModel, Field
-from src.model.grid import SudokuGrid
+from src.model.grid import SudokuGrid  # noqa
 from src.solvers.solver_type import SudokuSolverType
-import numpy as np
+import numpy as np  # noqa
 
 
 def ensure_puzzle_is_valid(puzzle: list[list[int]]) -> list[list[int]]:

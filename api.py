@@ -1,11 +1,11 @@
-from src.solvers.sat_solver import SatSudokuValidator #noqa
+from src.solvers.sat_solver import SatSudokuValidator  # noqa
 from src.model.requests import SolveRequest, ValidateRequest
 from src.model.responses import SolveResponse, ValidateResponse
 
 import uvicorn
 
-from fastapi import FastAPI, HTTPException #noqa
-from src.model.grid import SudokuGrid #noqa
+from fastapi import FastAPI, HTTPException  # noqa
+from src.model.grid import SudokuGrid  # noqa
 
 app = FastAPI()
 
@@ -19,12 +19,14 @@ def solve_sudoku(req: SolveRequest) -> SolveResponse:
     # - solve the sudoku
     #   - if succeeded return the solution as a list
     #     SudokuGrid has now a `to_list` method :)
+    #     *warning*: in `SolverResponse` constructor provide the argument as a keyword argument, e.g.,
+    #       `SolverResponse(solution=...)`
     #   - in case the solver failed to find a solution:
     #     raise HTTPException with code 400 and detail "INFEASIBLE"
     #   - in case of timeout:
     #     raise HTTPException with code 400 and detail "TIMEOUT"
     #   - in case of other exceptions
-    #     raise HTTPException with code 400 and detail beign the exception message
+    #     raise HTTPException with code 400 and detail being the exception message
     #
     # https://fastapi.tiangolo.com/tutorial/handling-errors/#raise-an-httpexception-in-your-code
     raise NotImplementedError("not implemented yet")
@@ -38,6 +40,10 @@ def validate_sudoku(req: ValidateRequest) -> ValidateResponse:
     #   SudokuGrid has static method `from_list` :)
     # - use SatSudokuValidator class to check if the puzzle has unique solution
     # - return appropriate ValidateResponse
+    #   *warning*: in `ValidateResponse` constructor provide the argument as a keyword argument, e.g.,
+    #       `ValidateResponse(valid=...)`
+    #
+    # https://fastapi.tiangolo.com/tutorial/handling-errors/#raise-an-httpexception-in-your-code
     raise NotImplementedError("not implemented yet")
 
 

@@ -1,12 +1,12 @@
 from __future__ import annotations
 from dataclasses import dataclass
-import itertools
-from threading import Timer
+import itertools  # noqa
+from threading import Timer  # noqa
 from typing import Iterable
 from src.solvers.solver import SudokuSolver
 from src.model.grid import SudokuGrid
 from pysat.formula import CNF  # type: ignore[import-untyped]
-from pysat.solvers import Solver  # type: ignore[import-untyped]
+from pysat.solvers import Solver  # type: ignore[import-untyped] #noqa
 from src.utils.group_by import group_by
 
 

@@ -55,7 +55,6 @@ class SudokuSolver(ABC):
         """
         return timer() > self._deadline
 
-
     @abstractmethod
     def run_algorithm(self) -> SudokuGrid | None:
         """
