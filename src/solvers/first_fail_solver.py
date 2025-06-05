@@ -57,12 +57,6 @@ class State:
             values available for the given domain
         """
 
-        # TODO:
-        # Implement the method as described in the docstring.
-        #
-        # tip 1. read Variable type documentation
-        # tip 2. use self.row_domains, self.col_domains, self.block_domains
-        # tip 3. docs: https://docs.python.org/3.13/library/stdtypes.html#set.intersection
         row, col, block = variable
         return Domain(
             set.intersection(
@@ -81,14 +75,6 @@ class State:
         value: int
             what value should we assign
         """
-        # TODO:
-        # Update the state according to the docstring
-        # tip. you need to modify:
-        #   - self.grid
-        #   - self.free_variables
-        #   - self.row_domains
-        #   - self.col_domains
-        #   - self.block_domains
         self.free_variables.remove(variable)
         row, col, block = variable
         self.grid[row, col] = value
@@ -105,21 +91,11 @@ class State:
         variable: Variable
             an already assigned variable
         """
-        # TODO:
-        # Update the state according to the docstring.
-        # tip 1. you need to modify:
-        #   - self.grid
-        #   - self.free_variables
-        #   - self.row_domains
-        #   - self.col_domains
-        #   - self.block_domains
-        #
-        # tip 2. grid contains the current value
         self.free_variables.add(variable)
         row, col, block = variable
         value = self.grid[row, col]
         self.grid[row, col] = 0
-        self.row_domains[row].add(int(value))
+        self.row_domais[row].add(int(value))
         self.col_domains[col].add(int(value))
         self.block_domains[block].add(int(value))
 
@@ -138,12 +114,7 @@ class State:
         state: State
             a state matching the grid
         """
-        # TODO:
-        # Create an initial state as stated in the docstring
-        #
-        # tips.
-        # - to enumerate over the grid use:
-        #   `for (row, col), val in grid.enumerate():`
+
         free_variables: set[Variable] = set()
         values = set(range(1, grid.size + 1))
         row_available_values = [Domain(set(values)) for _ in range(grid.size)]
@@ -200,16 +171,6 @@ class FirstFailSudokuSolver(SudokuSolver):
             `False` - otherwise
         """
 
-        # TODO:
-        # Implement the search.
-        # 1. choose a free variable using `self._choose_variable`
-        #   - if there is None, the solver has succeeded
-        # 2. if there is a timeout, raise an appropriate exception
-        # 3. try to assign a value to the variable and run the method recursively
-        #   - take a value from the variable's domain
-        #   - use self.state.assign to assign a value
-        #   - use self.state.remove_assignment to revert the assignment
-        # 4. return `False` if the solution has not been found
         var_dom = self._choose_variable()
 
         if var_dom is None:
@@ -238,12 +199,6 @@ class FirstFailSudokuSolver(SudokuSolver):
             if there are no free variables left,returns `None`
             otherwise returns a variable with the smallest domain (together with its domain)
         """
-        # TODO:
-        # Implement the method according to the docstring.
-        # Useful stuff:
-        # - self.state.free_variables
-        # - self.state.domain
-        # - https://docs.python.org/3/library/functions.html#min
         if len(self.state.free_variables) == 0:
             return None
 
