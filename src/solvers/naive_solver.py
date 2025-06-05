@@ -31,9 +31,6 @@ class NaiveSudokuSolver(SudokuSolver):
         next_coords: tuple[int,int]
             coordinates (row, col) of the next cell
         """
-        # TODO:
-        # Copy code from the previous lab.
-        # Use `self._puzzle` instead of the `self.puzzle` and `self.solution`
         if col < self._puzzle.size - 1:
             return row, col + 1
         else:
@@ -58,17 +55,12 @@ class NaiveSudokuSolver(SudokuSolver):
             - `True` if the value can**not** be put in the cell
             - `False` otherwise
         """
-        # TODO:
-        # Copy code from the previous lab.
-        # Use `self._puzzle` instead of the `self.puzzle` and `self.solution`
         if np.uint(val) in self._puzzle[row]:
             return True
         if val in self._puzzle[:, col]:
             return True
         block_index = self._puzzle.block_index(row, col)
-        if val in self._puzzle.block(block_index):
-            return True
-        return False
+        return val in self._puzzle.block(block_index)
 
     def _dfs(self, row: int, col: int) -> bool:
         """
@@ -97,9 +89,7 @@ class NaiveSudokuSolver(SudokuSolver):
             `True` - if method found the solution
             `False` - otherwise
         """
-        # TODO:
-        # Copy code from the previous lab.
-        # Use `self._puzzle` instead of the `self.puzzle` and `self.solution`
+
         if row >= self._puzzle.size:
             return True
 
