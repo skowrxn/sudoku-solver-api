@@ -10,9 +10,9 @@ There still exist some issues that should be addressed before the deadline: **20
 <details><summary>[1p] Validate endpoint works correctly &gt;&gt; not implemented yet</summary></details>
 <details><summary>[1p] Grid post init works correctly &gt;&gt; the __post_init__ has not raised a ValueError for an incorrect grid:</summary>[[0&nbsp;4&nbsp;0&nbsp;0]<br>&nbsp;[3&nbsp;1&nbsp;0&nbsp;2]<br>&nbsp;[0&nbsp;2&nbsp;1&nbsp;0]<br>&nbsp;[2&nbsp;0&nbsp;0&nbsp;4]]</details>
 <details><summary>[1p] Puzzle field is validated correctly &gt;&gt; `ensure_puzzle_is_valid` has not raised a ValueError for an incorrect input:</summary>[[0,&nbsp;0,&nbsp;2,&nbsp;1,&nbsp;0],&nbsp;[0,&nbsp;2,&nbsp;0,&nbsp;0,&nbsp;0],&nbsp;[2,&nbsp;3,&nbsp;0,&nbsp;0,&nbsp;0],&nbsp;[4,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0]]</details>
-<details><summary>[1p] Sat validator works correctly &gt;&gt; test under development</summary></details>
+<details><summary>[1p] Sat validator works correctly &gt;&gt; not implemented yet</summary></details>
 
 -----------
 I remain your faithful servant\
 _Bobot_\
-_June 07, AD 2025, 00:17:25 (UTC)_
+_June 07, AD 2025, 11:38:13 (UTC)_
