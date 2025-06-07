@@ -153,7 +153,31 @@ class SudokuCNF:
 
     @staticmethod
     def _possible_propositions(puzzle: SudokuGrid) -> dict[int, Proposition]:
-        raise NotImplementedError("copy from the previous lab")
+        size = puzzle.size
+        id_counter = 1
+        result = {}
+        default_domain = set(range(1, size + 1))
+        row_taken = {i: set() for i in range(size)}
+        col_taken = {i: set() for i in range(size)}
+        block_taken = {i: set() for i in range(size)}
+
+        for (row, col), val in puzzle.enumerate():
+            if val != 0:
+                block = puzzle.block_index(row, col)
+                row_taken[row].add(val)
+                col_taken[col].add(val)
+                block_taken[block].add(val)
+
+        for (row, col), val in puzzle.enumerate():
+            if val != 0:
+                continue
+            block = puzzle.block_index(row, col)
+            valid = default_domain - (row_taken[row] | col_taken[col] | block_taken[block])
+            for val in valid:
+                result[id_counter] = Proposition(Coordinates(row, col, block), val, id_counter)
+                id_counter += 1
+
+        return result
 
 
 class SatSudokuSolver(SudokuSolver):
