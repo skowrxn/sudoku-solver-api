@@ -90,13 +90,21 @@ class SudokuCNF:
             self._exactly_one(cell_propositions)
 
     def _every_row_contains_unique_values(self):
-        raise NotImplementedError("copy from the previous lab")
+        for row_val_proposition in group_by(
+                self.propositions.values(),
+                lambda p: (p.coords.row, p.val)
+        ).values():
+            self._at_most_one(row_val_proposition)
 
     def _every_col_contains_unique_values(self):
-        raise NotImplementedError("copy from the previous lab")
+        for col_val_proposition in group_by(self.propositions.values(),
+                                            lambda p: (p.coords.col, p.val)).values():
+            self._at_most_one(col_val_proposition)
 
     def _every_block_contains_unique_values(self):
-        raise NotImplementedError("copy from the previous lab")
+        for block_val_proposition in group_by(self.propositions.values(),
+                                              lambda p: (self.puzzle.block_index(p.coords.row, p.coords.col), p.val)).values():
+            self._at_most_one(block_val_proposition)
 
     @staticmethod
     def encode(puzzle: SudokuGrid) -> SudokuCNF:
