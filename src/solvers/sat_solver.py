@@ -195,7 +195,24 @@ class SatSudokuSolver(SudokuSolver):
         super().__init__(puzzle, time_limit)
 
     def run_algorithm(self) -> SudokuGrid | None:
-        raise NotImplementedError("copy from the previous lab")
+        sudoku_cnf = SudokuCNF.encode(self._puzzle)
+
+        def interrupt(s):
+            s.interrupt()
+
+        with Solver(bootstrap_with=sudoku_cnf.cnf) as solver:
+            timer = Timer(self._time_limit, interrupt, [solver])
+            timer.start()
+            try:
+                solved = solver.solve_limited(expect_interrupt=True)
+                timer.cancel()
+                if solved is None:
+                    raise TimeoutError
+                if solved:
+                    return sudoku_cnf.decode(solver.get_model())
+                return None
+            except TimeoutError:
+                raise TimeoutError
 
 
 @dataclass
