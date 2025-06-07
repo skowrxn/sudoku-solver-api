@@ -142,7 +142,14 @@ class SudokuCNF:
         solution: SudokuGrid
             a sudoku grid filled according the SAT results
         """
-        raise NotImplementedError("copy from the previous lab")
+        valid_ids = [prop_id for prop_id in results if prop_id >= 0]
+        valid_propositions = [self.propositions[valid_prop_id] for valid_prop_id in valid_ids]
+        solved_puzzle = self.puzzle.copy()
+
+        for valid_proposition in valid_propositions:
+            solved_puzzle[valid_proposition.coords.row, valid_proposition.coords.col] = valid_proposition.val
+
+        return solved_puzzle
 
     @staticmethod
     def _possible_propositions(puzzle: SudokuGrid) -> dict[int, Proposition]:
