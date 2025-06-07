@@ -24,4 +24,11 @@ def group_by[K, V](items: Iterable[V], key: Callable[[V], K]) -> dict[K, list[V]
     grouped_collection: dict[K, list[V]]:
         elements from items grouped into a dictionary
     """
-    raise NotImplementedError("copy from the previous lab")
+    result = {}
+    for item in items:
+        k = key(item)
+        if k not in result:
+            result[k] = [item]
+        else:
+            result[k].append(item)
+    return result
