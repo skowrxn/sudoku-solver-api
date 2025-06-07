@@ -67,16 +67,21 @@ class SudokuCNF:
     """a puzzle encoded in the CNF"""
 
     def __post_init__(self) -> None:
-        raise NotImplementedError("copy from the previous lab")
+        self._every_cell_has_a_single_value()
+        self._every_row_contains_unique_values()
+        self._every_col_contains_unique_values()
+        self._every_block_contains_unique_values()
 
     def _at_least_one(self, propositions: Iterable[Proposition]) -> None:
-        raise NotImplementedError("copy from the previous lab")
+        self.cnf.append([p.id for p in propositions])
 
     def _at_most_one(self, propositions: Iterable[Proposition]) -> None:
-        raise NotImplementedError("copy from the previous lab")
+        for p, q in itertools.combinations(propositions, 2):
+            self.cnf.append([-p.id, -q.id])
 
     def _exactly_one(self, propositions: Iterable[Proposition]) -> None:
-        raise NotImplementedError("copy from the previous lab")
+        self._at_most_one(propositions)
+        self._at_least_one(propositions)
 
     def _every_cell_has_a_single_value(self):
         for cell_propositions in group_by(
