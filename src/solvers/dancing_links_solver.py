@@ -10,32 +10,11 @@ from src.model.grid import SudokuGrid
 class DancingLinksSudokuSolver(SudokuSolver):
     """
     This solver uses the famous Knuth's Algorithm X.
-    We will outsource work to the existing implementation in C:
+    It outsources work to the existing implementation in C:
         https://github.com/nstagman/exact_cover_sudoku
     """
 
     def run_algorithm(self) -> SudokuGrid | None:
-        # TODO:
-        # This method will run the C program in a separate process.
-        # The new process will communicate with as via a queue.
-        # The basic example is shown in documentation:
-        # - https://docs.python.org/3/library/multiprocessing.html#exchanging-objects-between-processes
-        #
-        # 1. create a queue
-        # 2. create a process with:
-        # - target set to `self._communicate_with_external_solver`
-        # - args containing only the queue
-        # 3. start the process
-        # 4. get the result from the queue:
-        # - https://docs.python.org/3/library/queue.html#queue.Queue.get
-        # - set timeout to `self._time_limit`
-        # 5. the get method can raise an exception, if that happens
-        # - check if the process is still alive:
-        #   https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Process.is_alive
-        # - if it is, terminate it:
-        #   https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Process.terminate
-        # - raise the TimeoutError
-
         queue: Queue = Queue()
         task = Process(target=self._communicate_with_external_solver, args=[queue])
         task.start()
@@ -57,11 +36,6 @@ class DancingLinksSudokuSolver(SudokuSolver):
             queue used to return the result
         """
 
-        # TODO:
-        # 1. run the algorithm via `self._rung_algorithm`
-        # 2. return its result via queue:
-        # - https://docs.python.org/3/library/queue.html#queue.Queue.put_nowait
-        # 3. if there is an exception, return `None` via the queue
         try:
             result = self._run_algorithm()
             queue.put_nowait(result)
@@ -77,32 +51,6 @@ class DancingLinksSudokuSolver(SudokuSolver):
         library: CDLL
             a library containing the algorithm implementation
         """
-
-        # TODO:
-        # You don't have to write any code here, but you create the library
-        # and put in at the `lib/ss.so` path.
-        #
-        # How to build the library:
-        # - download code from https://github.com/nstagman/exact_cover_sudoku
-        # - open the `c` directory
-        # - modify the `sudoku_solve.c` file by adding
-        #   `import <Python.h>` somewhere at the top
-        #   it is required by the file to be easily called from Python
-        # - modify the `makefile`:
-        #   0. rename EXE to `ss.so`
-        #   1. remove two lines starting with `run: $(EXE)`.
-        #      we won't run the code directly
-        #   2. add `-fPIC -shared` to CFLAGS, so the code would compile to a shared library
-        #   3. find location of your python development files,
-        #      if you are using `uv`, it should be something like this:
-        #      - include_path: /home/user/.local/share/uv/python/cpython-3.13.3-linux-x86_64-gnu/include/python3.13
-        #      - lib_path: /home/user/.local/share/uv/python/cpython-3.13.3-linux-x86_64-gnu/lib
-        #   4. add `-I<include_path>` to the CFLAGS, e.g.
-        #      -I/home/user/.local/share/uv/python/cpython-3.13.3-linux-x86_64-gnu/include/python3.13
-        #   5. add `-L<lib_path> to the LFLAGS, e.g.
-        #      LFLAGS := -lm -L/home/user/.local/share/uv/python/cpython-3.13.3-linux-x86_64-gnu/lib
-        #   6. run `make`
-        #   It should create the `ss.so` file you can copy to `lib` directory.
         LIB_PATH = Path("lib").joinpath("ss.so")
         return CDLL(LIB_PATH)
 
@@ -120,16 +68,6 @@ class DancingLinksSudokuSolver(SudokuSolver):
             a flat array of the same same as puzzle_array, but containing only zeros
         """
 
-        # TODO:
-        # Implement the method:
-        # - convert self._puzzle.size to `c_int`
-        #   https://docs.python.org/3/library/ctypes.html#fundamental-data-types
-        # - flatten the puzzle grid
-        #   check the `flatten` method of the `SudokuGrid`
-        # - and convert it to he C Array
-        #   https://docs.python.org/3/library/ctypes.html#arrays
-        # - create also an array full of `0`s
-        # Return them
         size = c_int(self._puzzle.size)
         puzzle_list = self._puzzle.flatten().tolist()
         puzzle_array = (c_int * len(puzzle_list))(*puzzle_list)
@@ -151,13 +89,6 @@ class DancingLinksSudokuSolver(SudokuSolver):
             a sudoku grid corresponding to the array
         """
 
-        # TODO:
-        # Implement the method:
-        # - convert array to np.array
-        #   * np.array can be initialized with anything iterable :)
-        # - reshape the new array to correct shape!
-        #   * https://numpy.org/doc/stable/reference/generated/numpy.reshape.html
-        # Return a new SudokuGrid with the hiven array
         array = np.array(solution).reshape((self._puzzle.size, self._puzzle.size))
         return SudokuGrid(array)
 
