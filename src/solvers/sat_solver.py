@@ -183,12 +183,6 @@ class SudokuCNF:
 class SatSudokuSolver(SudokuSolver):
     """
     A SAT-based sudoku solver using the python-sat library:
-    - what is a SAT-solver: https://en.wikipedia.org/wiki/SAT_solver
-
-    - python-sat basic usage: https://pysathq.github.io/usage/\n
-      look especially at an example starting with `formula = CNF()`
-
-    - python-sat docs: https://pysathq.github.io/docs/html/index.html#supplementary-examples-package
     """
 
     def __init__(self, puzzle, time_limit):
@@ -235,10 +229,17 @@ class SatSudokuValidator:
             `True` if there is a single solution to the puzzle
             `False` otherwise
         """
+
+        sudoku_cnf = SudokuCNF.encode(self._puzzle)
+
+        with Solver(bootstrap_with=sudoku_cnf.cnf) as solver:
+            return len(solver.enum_models()) > 1
+
+
+
         # TODO:
         # Use SAT solver to check the uniqueness of the solution.
         # tips:
         # - this time we ignore timeout so the code will be simpler
         # - instead of the `solve_limited` us `enum_model`:
         #   https://pysathq.github.io/docs/html/api/solvers.html#pysat.solvers.Solver.enum_models
-        raise NotImplementedError("not implemented yet")
