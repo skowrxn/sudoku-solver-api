@@ -9,9 +9,14 @@ from src.model.grid import SudokuGrid  # noqa
 
 app = FastAPI()
 
-
 @app.post("/solve", response_model=SolveResponse)
 def solve_sudoku(req: SolveRequest) -> SolveResponse:
+
+    puzzle = SudokuGrid.from_list(req.puzzle)
+    solver_type = req.solver
+
+    solver = solver_type.
+
     # TODO:
     # Solve the problem defined in the request.
     # - build the SudokuGrid from the list representation
