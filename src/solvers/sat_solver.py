@@ -233,7 +233,7 @@ class SatSudokuValidator:
         sudoku_cnf = SudokuCNF.encode(self._puzzle)
 
         with Solver(bootstrap_with=sudoku_cnf.cnf) as solver:
-            return len([m for m in solver.enum_models()]) > 1
+            return len([m for m in solver.enum_models()]) == 1
 
 
 
