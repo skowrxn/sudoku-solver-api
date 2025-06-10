@@ -13,9 +13,18 @@ app = FastAPI()
 def solve_sudoku(req: SolveRequest) -> SolveResponse:
 
     puzzle = SudokuGrid.from_list(req.puzzle)
+    time_limit = req.time_limit
     solver_type = req.solver
 
-    solver = solver_type.
+    try:
+        result = solver_type.solve(puzzle, time_limit)
+        if result is None:
+            raise HTTPException(status_code=400, detail="INFEASIBLE")
+        else:
+            solved_as_list = result.to_list()
+            return SolveResponse(solution=solved_as_list)
+    except TimeoutError:
+        raise HTTPException(status_code=400, detail="TIMEOUT")
 
     # TODO:
     # Solve the problem defined in the request.
@@ -34,7 +43,7 @@ def solve_sudoku(req: SolveRequest) -> SolveResponse:
     #     raise HTTPException with code 400 and detail being the exception message
     #
     # https://fastapi.tiangolo.com/tutorial/handling-errors/#raise-an-httpexception-in-your-code
-    raise NotImplementedError("not implemented yet")
+    #raise NotImplementedError("not implemented yet")
 
 
 @app.post("/validate", response_model=ValidateResponse)
