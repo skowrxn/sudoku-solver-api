@@ -24,6 +24,8 @@ def solve_sudoku(req: SolveRequest) -> SolveResponse:
         return SolveResponse(solution=solved_as_list)
     except TimeoutError:
         raise HTTPException(status_code=400, detail="TIMEOUT")
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -50,10 +52,8 @@ def solve_sudoku(req: SolveRequest) -> SolveResponse:
 @app.post("/validate", response_model=ValidateResponse)
 def validate_sudoku(req: ValidateRequest) -> ValidateResponse:
     sudoku = SudokuGrid.from_list(req.puzzle)
-    if SatSudokuValidator.has_unique_solution(sudoku):
-        return ValidateResponse(valid=True)
-    else:
-        return ValidateResponse(valid=False)
+    validator = SatSudokuValidator(sudoku)
+    return ValidateResponse(valid=validator.has_unique_solution())
     # TODO:
     # Check if the puzzle in the request is valid (has unique solution)
     # - build the SudokuGrid from the list representation
