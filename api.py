@@ -20,9 +20,8 @@ def solve_sudoku(req: SolveRequest) -> SolveResponse:
         result = solver_type.solve(puzzle, time_limit)
         if result is None:
             raise HTTPException(status_code=400, detail="INFEASIBLE")
-        else:
-            solved_as_list = result.to_list()
-            return SolveResponse(solution=solved_as_list)
+        solved_as_list = result.to_list()
+        return SolveResponse(solution=solved_as_list)
     except TimeoutError:
         raise HTTPException(status_code=400, detail="TIMEOUT")
     except Exception as e:
