@@ -9,9 +9,9 @@ from src.model.grid import SudokuGrid  # noqa
 
 app = FastAPI()
 
+
 @app.post("/solve", response_model=SolveResponse)
 def solve_sudoku(req: SolveRequest) -> SolveResponse:
-
     puzzle = SudokuGrid.from_list(req.puzzle)
     time_limit = req.time_limit
     solver_type = req.solver
@@ -25,6 +25,8 @@ def solve_sudoku(req: SolveRequest) -> SolveResponse:
             return SolveResponse(solution=solved_as_list)
     except TimeoutError:
         raise HTTPException(status_code=400, detail="TIMEOUT")
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
     # TODO:
     # Solve the problem defined in the request.
@@ -43,11 +45,16 @@ def solve_sudoku(req: SolveRequest) -> SolveResponse:
     #     raise HTTPException with code 400 and detail being the exception message
     #
     # https://fastapi.tiangolo.com/tutorial/handling-errors/#raise-an-httpexception-in-your-code
-    #raise NotImplementedError("not implemented yet")
+    # raise NotImplementedError("not implemented yet")
 
 
 @app.post("/validate", response_model=ValidateResponse)
 def validate_sudoku(req: ValidateRequest) -> ValidateResponse:
+    sudoku = SudokuGrid.from_list(req.puzzle)
+    if SatSudokuValidator.has_unique_solution(sudoku):
+        return ValidateResponse(valid=True)
+    else:
+        return ValidateResponse(valid=False)
     # TODO:
     # Check if the puzzle in the request is valid (has unique solution)
     # - build the SudokuGrid from the list representation
@@ -58,7 +65,7 @@ def validate_sudoku(req: ValidateRequest) -> ValidateResponse:
     #       `ValidateResponse(valid=...)`
     #
     # https://fastapi.tiangolo.com/tutorial/handling-errors/#raise-an-httpexception-in-your-code
-    raise NotImplementedError("not implemented yet")
+    # raise NotImplementedError("not implemented yet")
 
 
 if __name__ == "__main__":

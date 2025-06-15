@@ -91,19 +91,21 @@ class SudokuCNF:
 
     def _every_row_contains_unique_values(self):
         for row_val_proposition in group_by(
-                self.propositions.values(),
-                lambda p: (p.coords.row, p.val)
+            self.propositions.values(), lambda p: (p.coords.row, p.val)
         ).values():
             self._at_most_one(row_val_proposition)
 
     def _every_col_contains_unique_values(self):
-        for col_val_proposition in group_by(self.propositions.values(),
-                                            lambda p: (p.coords.col, p.val)).values():
+        for col_val_proposition in group_by(
+            self.propositions.values(), lambda p: (p.coords.col, p.val)
+        ).values():
             self._at_most_one(col_val_proposition)
 
     def _every_block_contains_unique_values(self):
-        for block_val_proposition in group_by(self.propositions.values(),
-                                              lambda p: (self.puzzle.block_index(p.coords.row, p.coords.col), p.val)).values():
+        for block_val_proposition in group_by(
+            self.propositions.values(),
+            lambda p: (self.puzzle.block_index(p.coords.row, p.coords.col), p.val),
+        ).values():
             self._at_most_one(block_val_proposition)
 
     @staticmethod
@@ -143,11 +145,15 @@ class SudokuCNF:
             a sudoku grid filled according the SAT results
         """
         valid_ids = [prop_id for prop_id in results if prop_id >= 0]
-        valid_propositions = [self.propositions[valid_prop_id] for valid_prop_id in valid_ids]
+        valid_propositions = [
+            self.propositions[valid_prop_id] for valid_prop_id in valid_ids
+        ]
         solved_puzzle = self.puzzle.copy()
 
         for valid_proposition in valid_propositions:
-            solved_puzzle[valid_proposition.coords.row, valid_proposition.coords.col] = valid_proposition.val
+            solved_puzzle[
+                valid_proposition.coords.row, valid_proposition.coords.col
+            ] = valid_proposition.val
 
         return solved_puzzle
 
@@ -172,9 +178,13 @@ class SudokuCNF:
             if val != 0:
                 continue
             block = puzzle.block_index(row, col)
-            valid = default_domain - (row_taken[row] | col_taken[col] | block_taken[block])
+            valid = default_domain - (
+                row_taken[row] | col_taken[col] | block_taken[block]
+            )
             for val in valid:
-                result[id_counter] = Proposition(Coordinates(row, col, block), val, id_counter)
+                result[id_counter] = Proposition(
+                    Coordinates(row, col, block), val, id_counter
+                )
                 id_counter += 1
 
         return result
@@ -234,8 +244,6 @@ class SatSudokuValidator:
 
         with Solver(bootstrap_with=sudoku_cnf.cnf) as solver:
             return len([m for m in solver.enum_models()]) == 1
-
-
 
         # TODO:
         # Use SAT solver to check the uniqueness of the solution.

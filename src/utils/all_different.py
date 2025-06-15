@@ -19,8 +19,14 @@ def all_different_except(array: npt.ArrayLike, excluded: set) -> bool:
         `True` if no value (except excluded) is repeating
         `False` otherwise
     """
+    uniq = np.unique_counts(array)
+    for i in range(len(uniq.values)):
+        if uniq.values[i] not in excluded:
+            if uniq.counts[i] != 1:
+                return False
+    return True
     # TODO:
     # Implement the function as described in the docstring
     # tip. `np.unique_counts` may be useful, but feel free to improvise
     #      https://numpy.org/devdocs/reference/generated/numpy.unique_counts.html
-    raise NotImplementedError("not implemented yet")
+    # raise NotImplementedError("not implemented yet")
