@@ -1,14 +1,18 @@
 Dear Student,
 
-I'm happy to announce that you've managed to get **5** out of 7 points for this assignment.
-<details><summary>You have already managed to pass 5 tests, so that is encouraging!</summary>&emsp;☑&nbsp;[1p]&nbsp;All&nbsp;different&nbsp;works&nbsp;correctly<br>&emsp;☑&nbsp;[1p]&nbsp;Solve&nbsp;endpoint&nbsp;solves&nbsp;puzzles<br>&emsp;☑&nbsp;[1p]&nbsp;Grid&nbsp;post&nbsp;init&nbsp;works&nbsp;correctly<br>&emsp;☑&nbsp;[1p]&nbsp;Puzzle&nbsp;field&nbsp;is&nbsp;validated&nbsp;correctly<br>&emsp;☑&nbsp;[1p]&nbsp;Sat&nbsp;validator&nbsp;works&nbsp;correctly</details>
+I'm happy to announce that you've managed to get **7** out of 7 points for this assignment.
+Congratulations! You've successfully navigated the coding labyrinth and emerged victorious. Next stop: Programming Wonderland!
+![Coder Triumph](https://raw.githubusercontent.com/sbobek/bobot-kudos/main/Leonardo_Diffusion_XL_A_photorealistic_image_of_a_coder_triump_2.jpg)
 
-There still exist some issues that should be addressed before the deadline: **2025-06-18 15:00:00 CEST (+0200)**. For further details, please refer to the following list:
 
-<details><summary>[1p] Solve endpoint handles special cases &gt;&gt; `solve_sudoku` should raise an `HTTPException` with detail=&#x27;INFEASIBLE&#x27; when solver returns `None`</summary></details>
-<details><summary>[1p] Validate endpoint works correctly &gt;&gt; &#x27;SudokuGrid&#x27; object has no attribute &#x27;_puzzle&#x27;</summary></details>
+**Caution**
+Note that his kudos was generated with ChatGPT 3.5 as a response to prompt: "Geneate 10 funny sentences that congratulte programmer for solving a task."
+The image was generated with Leonardo.ai with promped suggested by ChatGPT which was suppose to visualize the above kudos.
+Prompt used in Leonardo.ai: "A photorealistic image of a coder triumphantly emerging from a coding labyrinth, surrounded by a whimsical Wonderland landscape filled with vibrant colors and fantastical creatures."
+
+
 
 -----------
 I remain your faithful servant\
 _Bobot_\
-_June 15, AD 2025, 00:20:42 (UTC)_
+_June 15, AD 2025, 00:35:36 (UTC)_
